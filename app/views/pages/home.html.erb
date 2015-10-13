@@ -1,0 +1,16 @@
+<%= javascript_tag do %>
+    var button = document.createElement("Button");
+    var title = document.createElement("H1");
+    var title_name = document.createTextNode("This is the Title!");
+    var button_name = document.createTextNode("Hello");
+    
+    title.appendChild(title_name);
+
+    button.appendChild(button_name);
+    button.setAttribute("class", "btn btn-sm btn-warning");
+    title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3");
+    document.body.appendChild(title);
+    document.body.appendChild(button);
+    
+    document.getElementByTagName("H1")[0].setAttribute("class", "turn_red");
+<% end %>

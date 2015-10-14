@@ -8,6 +8,7 @@
     //var form_input = document.createElement("input");
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
+    var win_box = document.createElement("div");
     
     title.appendChild(title_name);
     button.appendChild(button_name);
@@ -20,13 +21,16 @@
     title.setAttribute("id", "title");
     red_box.setAttribute("class", "redbox");
     game_container.setAttribute("class", "gamecontainer");
+    win_box.setAttribute("class", "winbox");
     document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
     
     document.body.appendChild(title);
     //document.body.appendChild(button);
     //document.body.appendChild(form);
     document.body.appendChild(game_container);
+    document.body.appendChild(win_box);
     document.body.appendChild(red_box);
+
     
     button.addEventListener("click", showGame);
     
@@ -61,6 +65,7 @@ document.body.onkeydown = function(e){
            square_x += 10
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
+           evaluateWin();
        }
    }
    if(press.keyCode == 65){
@@ -68,6 +73,7 @@ document.body.onkeydown = function(e){
            square_x -= 10
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
+           evaluateWin();
        };
    }
    if(press.keyCode == 87){
@@ -75,6 +81,7 @@ document.body.onkeydown = function(e){
            square_y -= 10
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
+           evaluateWin();
        }
    }
    if(press.keyCode == 83){
@@ -82,11 +89,16 @@ document.body.onkeydown = function(e){
            square_y += 10
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
+           evaluateWin();
        }
    }
 };
    
-   
+function evaluateWin(){
+    if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
+    console.log("Winner!");
+    }
+}
    
 
     

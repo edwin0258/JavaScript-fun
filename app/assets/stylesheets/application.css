@@ -33,3 +33,11 @@
 #title{
     color: blue;
 }
+.winbox{
+    height:20px;
+    width:10px;
+    position:absolute;
+    top:530px;
+    left:740px;
+    background-color:green;
+}

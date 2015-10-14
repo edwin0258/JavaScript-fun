@@ -13,14 +13,23 @@
  *= require_tree .
  *= require_self
  */
-.turn_red{
-    color:red;
-}
+
 .redbox{
     width: 10px;
     height: 10px;
     background-color: red;
     position: absolute;
     top:300px;
-    left:10px;
+    left:500px;
+}
+.gamecontainer{
+    position:absolute;
+    height:250px;
+    width:250px;
+    top:300px;
+    left:500px;
+    background-color:#777;
+}
+#title{
+    color: blue;
 }

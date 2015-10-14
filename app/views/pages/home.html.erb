@@ -2,68 +2,93 @@
 
     var button = document.createElement("Button");
     var title = document.createElement("H1");
-    var title_name = document.createTextNode("This is the Title!");
-    var button_name = document.createTextNode("Hello");
-    var form = document.createElement("div");
-    var form_input = document.createElement("input");
+    var title_name = document.createTextNode("The red box.");
+    var button_name = document.createTextNode("Start");
+    //var form = document.createElement("div");
+    //var form_input = document.createElement("input");
     var red_box = document.createElement("div");
+    var game_container = document.createElement("div");
     
     title.appendChild(title_name);
     button.appendChild(button_name);
-    form.appendChild(form_input);
+    title.appendChild(button);
+    //form.appendChild(form_input);
     
-    form.setAttribute("id", "j-form");
-    button.setAttribute("class", "btn btn-sm btn-warning");
+    //form.setAttribute("id", "j-form");
+    button.setAttribute("class", "btn btn-sm btn-success");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
+    title.setAttribute("id", "title");
     red_box.setAttribute("class", "redbox");
-    //document.body.style.backgroundImage = rl('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
+    game_container.setAttribute("class", "gamecontainer");
+    document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
     
     document.body.appendChild(title);
-    document.body.appendChild(button);
-    document.body.appendChild(form);
+    //document.body.appendChild(button);
+    //document.body.appendChild(form);
+    document.body.appendChild(game_container);
     document.body.appendChild(red_box);
+    
+    button.addEventListener("click", showGame);
+    
     
     function arrayIt(array){
         array = array.split(' ');
         console.log(array);
     };
     
-   document.body.style.display = "none";
+   //document.body.style.display = "none";
+   red_box.style.display = "none";
+   game_container.style.display = "none";
    $(document).ready(function(){
-   $("body").fadeIn(2000).slow();
+   $("#title").fadeIn(2000).slow();
    });
    
+   function showGame(){
+       $(".redbox").fadeIn(2000);
+       $(".gamecontainer").fadeIn(2000);
+   }
+   
    //x axis
-   var square_x = 10;
+   var square_x = 500;
    //y axis
    var square_y = 300;
-   
-   function moveTick(e){
-       document.body.onkeyup = function(e){
-       press = e || window.event
-           if(press.keyCode === 68){
-               square_x += 10
-               red_box.style.left = square_x.toString() + "px";
-               console.log(square_x);
-           }
-           if(press.keyCode == 65){
-               square_x -= 10
-               red_box.style.left = square_x.toString() + "px";
-               console.log(square_x);
-           }
-           if(press.keyCode == 87){
-               square_y -= 10
-               red_box.style.top = square_y.toString() + "px";
-               console.log(square_y);
-           }
-           if(press.keyCode == 83){
-               square_y += 10
-               red_box.style.top = square_y.toString() + "px";
-               console.log(square_y);
-           }
+
+document.body.onkeydown = function(e){
+   press = e || window.event
+       //d key
+   if(press.keyCode === 68){
+       if(square_x < 740){
+           square_x += 10
+           red_box.style.left = square_x.toString() + "px";
+           console.log(square_x);
+       }
+   }
+   if(press.keyCode == 65){
+       if(square_x > 500){
+           square_x -= 10
+           red_box.style.left = square_x.toString() + "px";
+           console.log(square_x);
        };
-   };
-   setInterval("moveTick()", 10);
+   }
+   if(press.keyCode == 87){
+       if(square_y > 300){
+           square_y -= 10
+           red_box.style.top = square_y.toString() + "px";
+           console.log(square_y);
+       }
+   }
+   if(press.keyCode == 83){
+       if(square_y < 540){
+           square_y += 10
+           red_box.style.top = square_y.toString() + "px";
+           console.log(square_y);
+       }
+   }
+};
+   
+   
+   
+
     
     
 <% end %>

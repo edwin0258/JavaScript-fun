@@ -33,19 +33,37 @@
    $("body").fadeIn(2000).slow();
    });
    
+   //x axis
+   var square_x = 10;
+   //y axis
+   var square_y = 300;
    
-   var square_movement = 10;
-   document.getElementsByTagName('body')[0].onkeyup = function(e){
-       var press = e || window.event;
-       if(press.keyCode == 87){
-           square_movement += 10
-           red_box.style.left = square_movement.toString() + "px";
-           console.log(square_movement);
-       }
-       else{
-       //nothing
-       }
+   function moveTick(e){
+       document.body.onkeyup = function(e){
+       press = e || window.event
+           if(press.keyCode === 68){
+               square_x += 10
+               red_box.style.left = square_x.toString() + "px";
+               console.log(square_x);
+           }
+           if(press.keyCode == 65){
+               square_x -= 10
+               red_box.style.left = square_x.toString() + "px";
+               console.log(square_x);
+           }
+           if(press.keyCode == 87){
+               square_y -= 10
+               red_box.style.top = square_y.toString() + "px";
+               console.log(square_y);
+           }
+           if(press.keyCode == 83){
+               square_y += 10
+               red_box.style.top = square_y.toString() + "px";
+               console.log(square_y);
+           }
+       };
    };
+   setInterval("moveTick()", 10);
     
     
 <% end %>

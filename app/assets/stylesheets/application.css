@@ -31,7 +31,7 @@
     background-color:#777;
 }
 #title{
-    color: blue;
+    color: red;
 }
 .winbox{
     height:20px;
@@ -40,4 +40,11 @@
     top:530px;
     left:740px;
     background-color:green;
+}
+.loosebox{
+    height:10px;
+    width:10px;
+    position:absolute;
+    left:640px;
+    background-color:maroon;
 }

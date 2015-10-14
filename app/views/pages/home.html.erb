@@ -9,26 +9,37 @@
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
     var win_box = document.createElement("div");
+    var loose_box = document.createElement("div");
     
     title.appendChild(title_name);
     button.appendChild(button_name);
     title.appendChild(button);
     //form.appendChild(form_input);
     
+    
+    //Appending classes and id's to created elements; this is to be able to style and manipulate them.
     //form.setAttribute("id", "j-form");
     button.setAttribute("class", "btn btn-sm btn-success");
+    button.setAttribute("id", "startbutton");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
     title.setAttribute("id", "title");
     red_box.setAttribute("class", "redbox");
     game_container.setAttribute("class", "gamecontainer");
     win_box.setAttribute("class", "winbox");
+    loose_box.setAttribute("class", "loosebox");
+    
+    
+    //background image
     document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
     
+    //placing elements on screen
     document.body.appendChild(title);
     //document.body.appendChild(button);
     //document.body.appendChild(form);
     document.body.appendChild(game_container);
     document.body.appendChild(win_box);
+    document.body.appendChild(loose_box);
+    //appended last to make sure it is placed on top.
     document.body.appendChild(red_box);
 
     
@@ -40,22 +51,41 @@
         console.log(array);
     };
     
+    //pick a random number for loose box top
+   var randomTop = getRandom(300, 740) * 10
+   var randomLeft = Math.floor((Math.random() * 240) + 500);
+    
    //document.body.style.display = "none";
    red_box.style.display = "none";
    game_container.style.display = "none";
+   win_box.style.display = "none";
+   loose_box.style.display = "none";
+   loose_box.style.top = randomTop + "px";
+   loose_box.style.left = randomLeft + "px";
+   
+   
+   //Intro
    $(document).ready(function(){
    $("#title").fadeIn(2000).slow();
    });
    
+   //When pressing start button fade in game
    function showGame(){
+       $("#startbutton").fadeOut(2000);
        $(".redbox").fadeIn(2000);
        $(".gamecontainer").fadeIn(2000);
+       $(".winbox").fadeIn(2000);
+       $(".loosebox").fadeIn(2000);
    }
    
    //x axis
    var square_x = 500;
    //y axis
    var square_y = 300;
+   //top of loose box
+   var loose_top = randomTop
+   //left of loose box
+   var loose_left = randomLeft
 
 document.body.onkeydown = function(e){
    press = e || window.event
@@ -66,6 +96,8 @@ document.body.onkeydown = function(e){
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
            evaluateWin();
+           evaluateLoose();
+           console.log(loose_box.style.top);
        }
    }
    if(press.keyCode == 65){
@@ -74,6 +106,7 @@ document.body.onkeydown = function(e){
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
            evaluateWin();
+           evaluateLoose();
        };
    }
    if(press.keyCode == 87){
@@ -82,6 +115,7 @@ document.body.onkeydown = function(e){
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
            evaluateWin();
+           evaluateLoose();
        }
    }
    if(press.keyCode == 83){
@@ -90,6 +124,7 @@ document.body.onkeydown = function(e){
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
            evaluateWin();
+           evaluateLoose();
        }
    }
 };
@@ -97,6 +132,15 @@ document.body.onkeydown = function(e){
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
     console.log("Winner!");
+    title.innerHTML = "You win!";
+    title.style.backgroundColor = "green";
+    }
+}
+function evaluateLoose(){
+    if(square_y == loose_top && square_x == loose_left){
+    console.log("You loose!");
+    title.innerHTML = "You Loose!";
+    title.style.backgroundColor = "maroon";
     }
 }
    

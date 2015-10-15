@@ -46,6 +46,7 @@
     button.addEventListener("click", showGame);
     
     
+    //General functions
     function arrayIt(array){
         array = array.split(' ');
         console.log(array);
@@ -56,6 +57,8 @@
     function getRandom10(min, max){
         return getRandomInt(min / 10, max / 10) * 10
     };
+    
+    
     
     //pick a random number for loose box top
    var randomTop = getRandom10(300, 540);
@@ -85,6 +88,8 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
+       setInterval(moveLooseBox, 100);
+       setInterval(evaluateLoose, 100);
    }
    
    //x axis
@@ -95,7 +100,10 @@
    var loose_top = randomTop
    //left of loose box
    var loose_left = randomLeft
+   //value to shift directions of loose box
+   var loose_direction = 0;
 
+//key logger
 document.body.onkeydown = function(e){
    press = e || window.event
        //d key
@@ -105,7 +113,6 @@ document.body.onkeydown = function(e){
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
            evaluateWin();
-           evaluateLoose();
            console.log(loose_box.style.top);
        }
    }
@@ -115,7 +122,6 @@ document.body.onkeydown = function(e){
            red_box.style.left = square_x.toString() + "px";
            console.log(square_x);
            evaluateWin();
-           evaluateLoose();
        };
    }
    if(press.keyCode == 87){
@@ -124,7 +130,6 @@ document.body.onkeydown = function(e){
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
            evaluateWin();
-           evaluateLoose();
        }
    }
    if(press.keyCode == 83){
@@ -133,16 +138,36 @@ document.body.onkeydown = function(e){
            red_box.style.top = square_y.toString() + "px";
            console.log(square_y);
            evaluateWin();
-           evaluateLoose();
        }
    }
 };
-   
+//game functions
+function moveLooseBox(){
+    if(loose_direction == 0){
+        randomTop -= 10;
+        loose_box.style.top = randomTop + "px";
+        loose_top = randomTop
+        if(randomTop <= 300){
+            loose_direction = 1;
+        }
+    }
+    else if(loose_direction == 1){
+        randomTop += 10;
+        loose_box.style.top = randomTop + "px";
+        loose_top = randomTop
+        if(randomTop >= 540){
+            loose_direction = 0;
+        }
+    }
+    
+    
+}
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
     console.log("Winner!");
     title.innerHTML = "You win!";
     title.style.backgroundColor = "green";
+    moveLooseBox();
     }
 }
 function evaluateLoose(){
@@ -153,7 +178,5 @@ function evaluateLoose(){
     }
 }
    
-
-    
     
 <% end %>

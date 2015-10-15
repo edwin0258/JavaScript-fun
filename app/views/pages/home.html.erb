@@ -10,6 +10,7 @@
     var game_container = document.createElement("div");
     var win_box = document.createElement("div");
     var loose_box = document.createElement("div");
+    var wall_box = document.createElement("div");
     
     title.appendChild(title_name);
     button.appendChild(button_name);
@@ -27,6 +28,7 @@
     game_container.setAttribute("class", "gamecontainer");
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
+    wall_box.setAttribute("class", "wallbox");
     
     
     //background image
@@ -88,8 +90,9 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
-       setInterval(moveLooseBox, 100);
-       setInterval(evaluateLoose, 100);
+       setInterval(moveLooseBox, 50);
+       setInterval(evaluateLoose, 10);
+       setInterval(shiftLooseBox, 2500);
    }
    
    //x axis
@@ -142,6 +145,13 @@ document.body.onkeydown = function(e){
    }
 };
 //game functions
+//move loose box left and right
+function shiftLooseBox(){
+    randomLeft = getRandom10(500, 740);
+    loose_box.style.left = randomLeft + "px";
+    loose_left = randomLeft
+}
+//Move loose box up and down
 function moveLooseBox(){
     if(loose_direction == 0){
         randomTop -= 10;
@@ -167,7 +177,6 @@ function evaluateWin(){
     console.log("Winner!");
     title.innerHTML = "You win!";
     title.style.backgroundColor = "green";
-    moveLooseBox();
     }
 }
 function evaluateLoose(){

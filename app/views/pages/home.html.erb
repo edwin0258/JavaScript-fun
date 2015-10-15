@@ -3,6 +3,7 @@
     var button = document.createElement("Button");
     var title = document.createElement("H1");
     var title_name = document.createTextNode("The red box.");
+    //var points_counter = document.createElement("div")
     var button_name = document.createTextNode("Start");
     //var form = document.createElement("div");
     //var form_input = document.createElement("input");
@@ -29,6 +30,7 @@
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
     wall_box.setAttribute("class", "wallbox");
+    //points_counter.setAttribute("class", "well");
     
     
     //background image
@@ -43,6 +45,8 @@
     document.body.appendChild(loose_box);
     //appended last to make sure it is placed on top.
     document.body.appendChild(red_box);
+    document.body.appendChild(wall_box);
+    //document.body.appendChild("points_counter");
 
     
     button.addEventListener("click", showGame);
@@ -105,42 +109,48 @@
    var loose_left = randomLeft
    //value to shift directions of loose box
    var loose_direction = 0;
+   //counter for levels
+   var points_counter = 0;
+   //register a game over
+   var game_over = 0;
 
 //key logger
 document.body.onkeydown = function(e){
    press = e || window.event
        //d key
-   if(press.keyCode === 68){
-       if(square_x < 740){
-           square_x += 10
-           red_box.style.left = square_x.toString() + "px";
-           console.log(square_x);
-           evaluateWin();
-           console.log(loose_box.style.top);
+   if(game_over == 0){
+       if(press.keyCode === 68){
+           if(square_x < 740){
+               square_x += 10
+               red_box.style.left = square_x.toString() + "px";
+               console.log(square_x);
+               evaluateWin();
+               console.log(loose_box.style.top);
+           }
        }
-   }
-   if(press.keyCode == 65){
-       if(square_x > 500){
-           square_x -= 10
-           red_box.style.left = square_x.toString() + "px";
-           console.log(square_x);
-           evaluateWin();
-       };
-   }
-   if(press.keyCode == 87){
-       if(square_y > 300){
-           square_y -= 10
-           red_box.style.top = square_y.toString() + "px";
-           console.log(square_y);
-           evaluateWin();
+       if(press.keyCode == 65){
+           if(square_x > 500){
+               square_x -= 10
+               red_box.style.left = square_x.toString() + "px";
+               console.log(square_x);
+               evaluateWin();
+           };
        }
-   }
-   if(press.keyCode == 83){
-       if(square_y < 540){
-           square_y += 10
-           red_box.style.top = square_y.toString() + "px";
-           console.log(square_y);
-           evaluateWin();
+       if(press.keyCode == 87){
+           if(square_y > 300){
+               square_y -= 10
+               red_box.style.top = square_y.toString() + "px";
+               console.log(square_y);
+               evaluateWin();
+           }
+       }
+       if(press.keyCode == 83){
+           if(square_y < 540){
+               square_y += 10
+               red_box.style.top = square_y.toString() + "px";
+               console.log(square_y);
+               evaluateWin();
+           }
        }
    }
 };
@@ -177,6 +187,17 @@ function evaluateWin(){
     console.log("Winner!");
     title.innerHTML = "You win!";
     title.style.backgroundColor = "green";
+    $(".redbox").fadeOut(2000);
+    $(".gamecontainer").fadeOut(2000);
+    $(".winbox").fadeOut(2000);
+    $(".loosebox").fadeOut(2000);
+    red_box.style.top = 300 + "px";
+    red_box.style.left = 500 + "px";
+    square_x = 500;
+    square_y = 300;
+    points_counter += 1;
+    alert("Level " + points_counter);
+    showGame();
     }
 }
 function evaluateLoose(){
@@ -184,6 +205,14 @@ function evaluateLoose(){
     console.log("You loose!");
     title.innerHTML = "You Loose!";
     title.style.backgroundColor = "maroon";
+    alert("Game Over")
+    $(".redbox").fadeOut(2000);
+    $(".gamecontainer").fadeOut(2000);
+    $(".winbox").fadeOut(2000);
+    $(".loosebox").fadeOut(2000);
+    square_x = 400;
+    square_y = 200;
+    game_over = 1;
     }
 }
    

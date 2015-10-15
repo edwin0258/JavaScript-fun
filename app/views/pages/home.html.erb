@@ -50,11 +50,20 @@
         array = array.split(' ');
         console.log(array);
     };
+    function getRandomInt(min, max){
+       return Math.floor((Math.random() * (max - min + 1) + min));
+    };
+    function getRandom10(min, max){
+        return getRandomInt(min / 10, max / 10) * 10
+    };
     
     //pick a random number for loose box top
-   var randomTop = getRandom(300, 740) * 10
-   var randomLeft = Math.floor((Math.random() * 240) + 500);
+   var randomTop = getRandom10(300, 540);
+   var randomLeft = getRandom10(500, 740);
+     
+
     
+
    //document.body.style.display = "none";
    red_box.style.display = "none";
    game_container.style.display = "none";

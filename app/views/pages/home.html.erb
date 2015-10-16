@@ -1,18 +1,29 @@
 <%= javascript_tag do %>
+    
+    //the points for the game
+    var points = 0;
+    //level of the game
+    var level = 0;
 
+    //creating the main elements on page
     var button = document.createElement("Button");
     var title = document.createElement("H1");
     var title_name = document.createTextNode("The red box.");
-    //var points_counter = document.createElement("div")
+    var points_container = document.createElement("div");
+    var points_counter = document.createTextNode(points);
     var button_name = document.createTextNode("Start");
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
     var win_box = document.createElement("div");
     var loose_box = document.createElement("div");
     
+    
+    //appending text and additions
     title.appendChild(title_name);
     button.appendChild(button_name);
     title.appendChild(button);
+    title.appendChild(points_container);
+    points_container.appendChild(points_counter);
     
     
     //Appending classes and id's to created elements; this is to be able to style and manipulate them.
@@ -24,7 +35,8 @@
     game_container.setAttribute("class", "gamecontainer");
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
-    //points_counter.setAttribute("class", "well");
+    points_container.setAttribute("class", "pointscounter well col-md-3 col-md-offset-9");
+    //points_counter.innerHTML = "Points" + " " + points;
     
     
     //background color
@@ -122,9 +134,12 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
-       //for(i = 0; i < 50; i++){
        $(".wallbox").fadeIn(2000);
-       //}
+       
+       var points_counter = document.createTextNode(points);
+       points_container.innerHTML = "";
+       points_container.appendChild(points_counter);
+       
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
        setInterval(wallHit, 5);
@@ -303,7 +318,9 @@ function wallHit(){
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
     console.log("Winner!");
-    title.innerHTML = "You win!";
+    //title.innerHTML = "You win!";
+    points += 2;
+    points_counter.innerHTML = "Points" + " " + points;
     title.style.backgroundColor = "green";
     $(".redbox").fadeOut(2000);
     $(".gamecontainer").fadeOut(2000);
@@ -314,8 +331,8 @@ function evaluateWin(){
     red_box.style.left = 500 + "px";
     square_x = 500;
     square_y = 300;
-    points_counter += 1;
-    alert("Level " + points_counter);
+    level += 1;
+    alert("Level " + level);
     showGame();
     }
 }

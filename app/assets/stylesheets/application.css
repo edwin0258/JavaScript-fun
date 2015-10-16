@@ -33,6 +33,9 @@
 #title{
     color: red;
 }
+.pointscounter{
+ font-size: 15px;
+}
 .winbox{
     height:20px;
     width:10px;

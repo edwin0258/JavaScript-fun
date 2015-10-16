@@ -5,22 +5,17 @@
     var title_name = document.createTextNode("The red box.");
     //var points_counter = document.createElement("div")
     var button_name = document.createTextNode("Start");
-    //var form = document.createElement("div");
-    //var form_input = document.createElement("input");
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
     var win_box = document.createElement("div");
     var loose_box = document.createElement("div");
-    var wall_box = document.createElement("div");
     
     title.appendChild(title_name);
     button.appendChild(button_name);
     title.appendChild(button);
-    //form.appendChild(form_input);
     
     
     //Appending classes and id's to created elements; this is to be able to style and manipulate them.
-    //form.setAttribute("id", "j-form");
     button.setAttribute("class", "btn btn-sm btn-success");
     button.setAttribute("id", "startbutton");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
@@ -29,26 +24,22 @@
     game_container.setAttribute("class", "gamecontainer");
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
-    wall_box.setAttribute("class", "wallbox");
     //points_counter.setAttribute("class", "well");
     
     
-    //background image
-    //document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
+    //background color
+    document.body.style.backgroundColor = "blue";
     
     //placing elements on screen
     document.body.appendChild(title);
-    //document.body.appendChild(button);
-    //document.body.appendChild(form);
     document.body.appendChild(game_container);
     document.body.appendChild(win_box);
     document.body.appendChild(loose_box);
-    //appended last to make sure it is placed on top.
+    //appended redbox last to make sure it is placed on top.
     document.body.appendChild(red_box);
-    document.body.appendChild(wall_box);
     //document.body.appendChild("points_counter");
 
-    
+    //start game button event listener
     button.addEventListener("click", showGame);
     
     
@@ -77,33 +68,33 @@
     var wall_left_array = [];
     
     //setup walls on screen
-     for(i = 0; i < 20; i++){
+     for(i = 0; i < 50; i++){
+       //make a wall and give it wallbox class
        var wall_box = document.createElement("div");
        wall_box.setAttribute("class", "wallbox");
-       //appends each box to the screen
+       
+       //appends each wall box to the screen
        document.body.appendChild(wall_box);
+       wall_box.style.display = "none";
+       
+       //pick a random spot for each wall(two walls could be placed on same spot)
        randomTop = getRandom10(300, 540);
        randomLeft = getRandom10(500, 740);
+       
        //logs the place of each box and puts it in an array
        wall_top = randomTop;
        wall_top_array.push(wall_top);
        wall_left = randomLeft
        wall_left_array.push(wall_left);
-       placeWall(wall_box);
+       
+       //finish up by setting up each wall box's style
+       wall_box.style.top = randomTop + "px";
+       wall_box.style.left = randomLeft + "px";
     }
     
     
-    //pick a random number for loose box top
-   function placeWall(box){
-       //randomTop = getRandom10(300, 540);
-       //randomLeft = getRandom10(500, 740);
-       
-       box.style.top = randomTop + "px";
-       box.style.left = randomLeft + "px";
-       
-   }
    
-   
+   //pick a random number for loose box top and left
    var randomTop = getRandom10(300, 540);
    var randomLeft = getRandom10(500, 740);
      
@@ -131,6 +122,9 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
+       //for(i = 0; i < 50; i++){
+       $(".wallbox").fadeIn(2000);
+       //}
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
        setInterval(wallHit, 5);
@@ -295,7 +289,7 @@ var top_array;
 var hit = 0;
 function wallHit(){
     
-    for(i = 0; i < 20; i++){
+    for(i = 0; i < 50; i++){
     left_array = wall_left_array[i]
     top_array = wall_top_array[i]
     //console.log(top_array);
@@ -315,6 +309,7 @@ function evaluateWin(){
     $(".gamecontainer").fadeOut(2000);
     $(".winbox").fadeOut(2000);
     $(".loosebox").fadeOut(2000);
+    $(".wallbox").fadeOut(2000);
     red_box.style.top = 300 + "px";
     red_box.style.left = 500 + "px";
     square_x = 500;
@@ -334,6 +329,7 @@ function evaluateLoose(){
     $(".gamecontainer").fadeOut(2000);
     $(".winbox").fadeOut(2000);
     $(".loosebox").fadeOut(2000);
+    $(".wallbox").fadeOut(2000);
     square_x = 400;
     square_y = 200;
     game_over = 1;

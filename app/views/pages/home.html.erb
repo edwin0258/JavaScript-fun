@@ -16,6 +16,7 @@
     var game_container = document.createElement("div");
     var win_box = document.createElement("div");
     var loose_box = document.createElement("div");
+    var coin_box = document.createElement("div");
     
     
     //appending text and additions
@@ -36,6 +37,7 @@
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
     points_container.setAttribute("class", "pointscounter well col-md-3 col-md-offset-9");
+    coin_box.setAttribute("class", "coinbox");
     //points_counter.innerHTML = "Points" + " " + points;
     
     
@@ -47,8 +49,9 @@
     document.body.appendChild(game_container);
     document.body.appendChild(win_box);
     document.body.appendChild(loose_box);
-    //appended redbox last to make sure it is placed on top.
-    document.body.appendChild(red_box);
+    document.body.appendChild(coin_box);
+    //appended redbox last to make sure it is placed on top.(MOVED)
+    //document.body.appendChild(red_box);
     //document.body.appendChild("points_counter");
 
     //start game button event listener
@@ -69,6 +72,9 @@
     function compareValue(x, y){
         return x == y;
     }
+    function compareCoinValue(x, y){
+        return x + "px" == y;
+    }
     //visual setup functions
     
     
@@ -79,6 +85,41 @@
     var wall_top_array = [];
     var wall_left_array = [];
     
+    //define the coin space
+    var coin_top = "";
+    var coin_left = "";
+    //setup cointop and coinleft arrays
+    var coin_top_array = [];
+    var coin_left_array = [];
+    //setup array for naming coins
+    var coin_box = [];
+    //setup coins on screen
+    document.body.appendChild(red_box);
+    for(i = 0; i < 30; i++){
+       //make a coin with an individual name and give it coin class
+       coin_box[i] = document.createElement("div");
+       coin_box[i].setAttribute("class", "coinbox");
+       
+       //appends each coin box to the screen
+       document.body.appendChild(coin_box[i]);
+       //wall_box.style.display = "none";
+       
+       //pick a random spot for each coin(two coins could be placed on same spot)
+       randomTop = getRandom10(300, 540);
+       randomLeft = getRandom10(500, 740);
+       
+       //logs the place of each coin and puts it in an array
+       coin_top = randomTop;
+       coin_top_array.push(coin_top);
+       coin_left = randomLeft
+       coin_left_array.push(coin_left);
+       
+       //finish up by setting up each wall box's style
+       coin_box[i].style.top = randomTop + "px";
+       coin_box[i].style.left = randomLeft + "px";
+    }
+    //keep red_box above coin but under walls
+    document.body.appendChild(red_box);
     //setup walls on screen
      for(i = 0; i < 50; i++){
        //make a wall and give it wallbox class
@@ -103,6 +144,8 @@
        wall_box.style.top = randomTop + "px";
        wall_box.style.left = randomLeft + "px";
     }
+    
+    
     
     
    
@@ -143,6 +186,7 @@
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
        setInterval(wallHit, 5);
+       setInterval(coinHit, 5);
        setInterval(shiftLooseBox, 2500);
        setInterval(moveRedbox, 10);
    }
@@ -315,6 +359,22 @@ function wallHit(){
         }
     }
 }
+function coinHit(){
+    
+    for(i = 0; i < 30; i++){
+    left_array = coin_box[i].style.left
+    top_array = coin_box[i].style.top
+    //console.log(top_array);
+    //console.log(left_array);
+        if(compareCoinValue(square_x, left_array) && compareCoinValue(square_y, top_array)){
+            var points_counter = document.createTextNode(points);
+            points_container.innerHTML = "";
+            points_container.appendChild(points_counter);
+            document.body.removeChild(coin_box[i]);
+            points += 1;
+        }
+    }
+}
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
     console.log("Winner!");
@@ -353,6 +413,5 @@ function evaluateLoose(){
     hit = 0;
     }
 }
-   
-    
+
 <% end %>

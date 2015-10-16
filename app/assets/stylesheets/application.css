@@ -57,3 +57,11 @@
     position:absolute;
     background-color:#222;
 }
+.coinbox{
+    height:10px;
+    width:10px;
+    position:absolute;
+    top:500px;
+    left:500px;
+    background-color:#FFD700;
+}

@@ -63,10 +63,47 @@
     function getRandom10(min, max){
         return getRandomInt(min / 10, max / 10) * 10
     };
+    function compareValue(x, y){
+        return x == y;
+    }
+    //visual setup functions
     
+    
+    //define the wall space
+    var wall_top = "";
+    var wall_left = "";
+    //setup walltop and wallleft arrays
+    var wall_top_array = [];
+    var wall_left_array = [];
+    
+    //setup walls on screen
+     for(i = 0; i < 20; i++){
+       var wall_box = document.createElement("div");
+       wall_box.setAttribute("class", "wallbox");
+       //appends each box to the screen
+       document.body.appendChild(wall_box);
+       randomTop = getRandom10(300, 540);
+       randomLeft = getRandom10(500, 740);
+       //logs the place of each box and puts it in an array
+       wall_top = randomTop;
+       wall_top_array.push(wall_top);
+       wall_left = randomLeft
+       wall_left_array.push(wall_left);
+       placeWall(wall_box);
+    }
     
     
     //pick a random number for loose box top
+   function placeWall(box){
+       //randomTop = getRandom10(300, 540);
+       //randomLeft = getRandom10(500, 740);
+       
+       box.style.top = randomTop + "px";
+       box.style.left = randomLeft + "px";
+       
+   }
+   
+   
    var randomTop = getRandom10(300, 540);
    var randomLeft = getRandom10(500, 740);
      
@@ -96,6 +133,7 @@
        $(".loosebox").fadeIn(2000);
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
+       setInterval(wallHit, 100);
        setInterval(shiftLooseBox, 2500);
    }
    
@@ -125,7 +163,7 @@ document.body.onkeydown = function(e){
                red_box.style.left = square_x.toString() + "px";
                console.log(square_x);
                evaluateWin();
-               console.log(loose_box.style.top);
+               //console.log(loose_box.style.top);
            }
        }
        if(press.keyCode == 65){
@@ -181,6 +219,20 @@ function moveLooseBox(){
     }
     
     
+}
+var left_array;
+var top_array;
+
+function wallHit(){
+    for(i = 0; i < 20; i++){
+    left_array = wall_left_array[i]
+    top_array = wall_top_array[i]
+    //console.log(top_array);
+    //console.log(left_array);
+    if(compareValue(square_x, left_array) && compareValue(square_y, top_array)){
+    console.log("hit");
+    }
+}
 }
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){

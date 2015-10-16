@@ -34,7 +34,7 @@
     
     
     //background image
-    document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
+    //document.body.style.backgroundImage = "url('http://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg')"
     
     //placing elements on screen
     document.body.appendChild(title);
@@ -133,8 +133,9 @@
        $(".loosebox").fadeIn(2000);
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
-       setInterval(wallHit, 100);
+       setInterval(wallHit, 5);
        setInterval(shiftLooseBox, 2500);
+       setInterval(moveRedbox, 10);
    }
    
    //x axis
@@ -151,7 +152,12 @@
    var points_counter = 0;
    //register a game over
    var game_over = 0;
-
+   //register a left key being pressed
+   var left_key = 0;
+   //register an up key being pressed
+   var up_key = 0;
+   //register a down key being pressed
+   var down_key = 0;
 //key logger
 document.body.onkeydown = function(e){
    press = e || window.event
@@ -163,36 +169,99 @@ document.body.onkeydown = function(e){
                red_box.style.left = square_x.toString() + "px";
                console.log(square_x);
                evaluateWin();
+               left_key = 0;
+               up_key = 0;
+               down_key = 0;
                //console.log(loose_box.style.top);
+               if(hit == 1){
+                   square_x -= 20
+                   hit = 0;
+               }
            }
        }
+       //a key
        if(press.keyCode == 65){
            if(square_x > 500){
                square_x -= 10
                red_box.style.left = square_x.toString() + "px";
                console.log(square_x);
                evaluateWin();
+               left_key = 1;
+               up_key = 0;
+               down_key = 0;
+               if(hit == 1){
+                   square_x += 20
+                   hit = 0;
+               }
            };
        }
+       //w key
        if(press.keyCode == 87){
            if(square_y > 300){
                square_y -= 10
                red_box.style.top = square_y.toString() + "px";
                console.log(square_y);
                evaluateWin();
+               left_key = 0;
+               up_key = 1;
+               down_key = 0;
+               console.log("HELLO");
+               if(hit == 1){
+                   square_y += 20
+                   hit = 0;
+               }
            }
        }
+       //s key
        if(press.keyCode == 83){
            if(square_y < 540){
                square_y += 10
                red_box.style.top = square_y.toString() + "px";
                console.log(square_y);
                evaluateWin();
+               left_key = 0;
+               up_key = 0;
+               down_key = 1;
+               if(hit == 1){
+                   square_y -= 20
+                   hit = 0;
+               }
            }
        }
    }
 };
 //game functions
+// quick redbox positioning if hitting a wall
+function moveRedbox(){
+    if(hit == 1 && left_key == 0 && up_key == 0 && down_key == 0){
+    //red_box.style.top = 300 + "px";
+    //red_box.style.left = 500 + "px";
+    //square_x = 500;
+    //square_y = 300;
+    square_x -= 10;
+    red_box.style.left = square_x.toString() + "px";
+    red_box.style.top = square_y.toString() + "px";
+    console.log("hi");
+    hit = 0;
+    }
+    if(left_key == 1  && hit == 1){
+        square_x += 20;
+        left_key = 0;
+        console.log("left");
+    }
+    if(up_key == 1  && hit == 1){
+        square_y += 10;
+        square_x += 10;
+        up_key = 0;
+        console.log("up");
+    }
+    if(down_key == 1  && hit == 1){
+        square_y -= 10;
+        square_x += 10;
+        down_key = 0;
+        console.log("down");
+    }
+}
 //move loose box left and right
 function shiftLooseBox(){
     randomLeft = getRandom10(500, 740);
@@ -222,17 +291,20 @@ function moveLooseBox(){
 }
 var left_array;
 var top_array;
-
+//log a hit
+var hit = 0;
 function wallHit(){
+    
     for(i = 0; i < 20; i++){
     left_array = wall_left_array[i]
     top_array = wall_top_array[i]
     //console.log(top_array);
     //console.log(left_array);
-    if(compareValue(square_x, left_array) && compareValue(square_y, top_array)){
-    console.log("hit");
+        if(compareValue(square_x, left_array) && compareValue(square_y, top_array)){
+        console.log("hit");
+        hit = 1;
+        }
     }
-}
 }
 function evaluateWin(){
     if(square_x == 740 && square_y == 540 || square_x == 740 && square_y == 530){
@@ -265,6 +337,7 @@ function evaluateLoose(){
     square_x = 400;
     square_y = 200;
     game_over = 1;
+    hit = 0;
     }
 }
    

@@ -8,12 +8,13 @@
     //creating the main elements on page
     var button = document.createElement("Button");
     var title = document.createElement("H1");
-    var title_name = document.createTextNode("The red box.");
+    var title_name = document.createTextNode("The red box ");
     var points_container = document.createElement("div");
     var points_counter = document.createTextNode(points);
     var button_name = document.createTextNode("Start");
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
+    var safe_zone = document.createElement("div");
     var win_box = document.createElement("div");
     var loose_box = document.createElement("div");
     
@@ -27,23 +28,26 @@
     
     
     //Appending classes and id's to created elements; this is to be able to style and manipulate them.
-    button.setAttribute("class", "btn btn-sm btn-success");
+    button.setAttribute("class", "btn  btn-danger");
     button.setAttribute("id", "startbutton");
+    points_container.setAttribute("class", "pointscontainer");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
     title.setAttribute("id", "title");
     red_box.setAttribute("class", "redbox");
     game_container.setAttribute("class", "gamecontainer");
+    safe_zone.setAttribute("class", "safezone");
     win_box.setAttribute("class", "winbox");
     loose_box.setAttribute("class", "loosebox");
     points_container.setAttribute("class", "pointscounter well col-md-3 col-md-offset-9");
-    //points_counter.innerHTML = "Points" + " " + points;
     
     
     //background color
-    document.body.style.backgroundColor = "blue";
+    document.body.style.backgroundColor = "#007FFF";
+    title.style.backgroundImage = "url('http://il9.picdn.net/shutterstock/videos/4404917/thumb/1.jpg?i10c=img.resize(height:160)')"
     
     //placing elements on screen
     document.body.appendChild(title);
+    document.body.appendChild(safe_zone);
     document.body.appendChild(game_container);
     document.body.appendChild(win_box);
     document.body.appendChild(loose_box);
@@ -178,6 +182,8 @@
    red_box.style.display = "none";
    game_container.style.display = "none";
    win_box.style.display = "none";
+   safe_zone.style.display = "none";
+   title.style.display = "none";
    loose_box.style.display = "none";
    loose_box.style.top = randomTop + "px";
    loose_box.style.left = randomLeft + "px";
@@ -185,7 +191,11 @@
    
    //Intro
    $(document).ready(function(){
-   $("#title").fadeIn(2000).slow();
+   $("#title").stop(true).fadeIn({
+       duration: 5000,
+       queue: false
+   }).css('display', 'none').slideDown(4000);
+   
    });
    
    //When pressing start button fade in game
@@ -195,6 +205,9 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
+       $("#title").fadeIn(2000);
+       $("#title").slideDown(2000);
+       $(".safezone").fadeIn(2000);
        //remove old coins and walls and replace with new
        removeCoins();
        placeCoins();
@@ -207,19 +220,22 @@
        var points_counter = document.createTextNode(points);
        points_container.innerHTML = "";
        points_container.appendChild(points_counter);
-       
+       setTimeout(shiftLooseBox, 5000);
+       setTimeout(moveLooseBox, 5000);
+       if(level <= 1){
        setInterval(moveLooseBox, 50);
        setInterval(evaluateLoose, 10);
-       setInterval(wallHit, 5);
+       setInterval(wallHit, 1);
        setInterval(coinHit, 5);
        setInterval(shiftLooseBox, 2500);
        setInterval(moveRedbox, 10);
+       }
    }
    
    //x axis
-   var square_x = 500;
+   var square_x = 490;
    //y axis
-   var square_y = 300;
+   var square_y = 290;
    //top of loose box
    var loose_top = randomTop
    //left of loose box
@@ -339,6 +355,13 @@ function moveRedbox(){
         down_key = 0;
         console.log("down");
     }
+    //move square back if going beyond the bounds of the safe zone    
+    if(square_y == 320 && square_x == 490){
+        square_y -= 40;
+    }
+    if(square_y == 290 && square_x == 520){
+        square_x -= 40;
+    }
 }
 //move loose box left and right
 function shiftLooseBox(){
@@ -411,12 +434,14 @@ function evaluateWin(){
     $(".gamecontainer").fadeOut(2000);
     $(".winbox").fadeOut(2000);
     $(".loosebox").fadeOut(2000);
+    $(".safezone").fadeOut(2000);
     $(".wallbox").fadeOut(2000);
     $(".coinbox").fadeOut(2000);
-    red_box.style.top = 300 + "px";
-    red_box.style.left = 500 + "px";
-    square_x = 500;
-    square_y = 300;
+    clearInterval(shiftLooseBox);
+    red_box.style.top = 290 + "px";
+    red_box.style.left = 490 + "px";
+    square_x = 490;
+    square_y = 290;
     level += 1;
     alert("Level " + level);
     showGame();
@@ -432,6 +457,7 @@ function evaluateLoose(){
     $(".gamecontainer").fadeOut(2000);
     $(".winbox").fadeOut(2000);
     $(".loosebox").fadeOut(2000);
+    $(".safezone").fadeOut(2000);
     $(".wallbox").fadeOut(2000);
     $(".coinbox").fadeOut(2000);
     square_x = 400;
@@ -444,3 +470,4 @@ function evaluateLoose(){
 
 
 <% end %>
+

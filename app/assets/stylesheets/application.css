@@ -19,8 +19,8 @@
     height: 10px;
     background-color: red;
     position: absolute;
-    top:300px;
-    left:500px;
+    top:290px;
+    left:490px;
 }
 .gamecontainer{
     position:absolute;
@@ -30,11 +30,24 @@
     left:500px;
     background-color:#777;
 }
+.safezone{
+    background-color:green;
+    position:absolute;
+    top:290px;
+    left:490px;
+    height:40px;
+    width:40px;
+}
 #title{
-    color: red;
+    color:white;
+    background-color:blue;
+}
+.pointscontainer{
+    color:white;
 }
 .pointscounter{
  font-size: 15px;
+ color:#6F4242;
 }
 .winbox{
     height:20px;

@@ -11,6 +11,8 @@
     var title_name = document.createTextNode("The red box ");
     var points_container = document.createElement("div");
     var points_counter = document.createTextNode(points);
+    var level_container = document.createElement("div");
+    var level_counter = document.createTextNode(level);
     var button_name = document.createTextNode("Start");
     var red_box = document.createElement("div");
     var game_container = document.createElement("div");
@@ -325,6 +327,35 @@ document.body.onkeydown = function(e){
    }
 };
 //game functions
+//alerting users level
+function alert2(message, title, buttonText) {
+
+    buttonText = (buttonText == undefined) ? "Ok" : buttonText;
+    title = (title == undefined) ? "The page says:" : title;
+
+    var div = $('<div>');
+    div.hide();
+    div.fadeIn(3000);
+    div.html(message);
+    div.attr('title', title);
+    div.dialog({
+        autoOpen: true,
+        modal: true,
+        draggable: false,
+        resizable: false,
+        buttons: [{
+            text: buttonText,
+            click: function () {
+                //$(this).dialog("close");
+                div.fadeOut(function(){
+                    $(this).dialog("close");
+                    div.remove();
+                });
+                //div.remove();
+            }
+        }]
+    });
+}
 // quick redbox positioning if hitting a wall
 function moveRedbox(){
     if(hit == 1 && left_key == 0 && up_key == 0 && down_key == 0){
@@ -358,9 +389,13 @@ function moveRedbox(){
     //move square back if going beyond the bounds of the safe zone    
     if(square_y == 320 && square_x == 490){
         square_y -= 40;
+        red_box.style.top = 290 + "px";
+        red_box.style.left = 490 + "px";
     }
     if(square_y == 290 && square_x == 520){
         square_x -= 40;
+        red_box.style.top = 290 + "px";
+        red_box.style.left = 490 + "px";
     }
 }
 //move loose box left and right
@@ -443,7 +478,7 @@ function evaluateWin(){
     square_x = 490;
     square_y = 290;
     level += 1;
-    alert("Level " + level);
+    alert2("You have " + points + " points", "level " + level, "Ok");
     showGame();
     }
 }

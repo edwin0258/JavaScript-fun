@@ -1,0 +1,6 @@
+<div class="well col-md-2">
+    <%= form_for @score, remote: true do |f| %>
+        <%= f.text_field :name, placeholder: "name" %>
+        <%= f.text_field :total, placeholder: @points %>
+    <% end %>
+</div>

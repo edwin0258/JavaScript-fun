@@ -67,6 +67,7 @@
     
     //start game button event listener
     button.addEventListener("click", showGame);
+    post_score.addEventListener("click", openForm);
     
     
     //General functions
@@ -532,7 +533,17 @@ function evaluateLoose(){
     }
 }
 
-
+//posting a score
+//set up player name
+var playerName = "";
+function openForm(){
+    playerName = prompt("What is your name?"); 
+    $.ajax({
+        type: "POST",
+        url: "/scores",
+        data: {score: { name: playerName, total: points} }
+    });
+}
 
 <% end %>
 

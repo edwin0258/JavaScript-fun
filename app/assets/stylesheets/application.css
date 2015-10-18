@@ -89,3 +89,7 @@
 .levelalert{
     background-color:blue;
 }
+#scorecontainer{
+    height:165px;
+    overflow: scroll;
+}

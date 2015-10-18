@@ -1,7 +1,7 @@
 class ScoresController < ApplicationController
     respond_to :html, :js
     def index
-        @scores = Score.all
+        @scores = Score.all.order("total DESC")
     end
     def new
         @score = Score.new

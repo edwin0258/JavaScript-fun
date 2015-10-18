@@ -4,8 +4,7 @@
     var points = 0;
     //level of the game
     var level = 1;
-
-    //creating the main elements on page
+    
     var button = document.createElement("Button");
     var title = document.createElement("H1");
     var title_name = document.createTextNode("The red box ");
@@ -546,5 +545,9 @@ function openForm(){
 }
 
 <% end %>
+<!--High schore button and link to ajax partial showing scores-->
+<%= link_to "High Scores", scores_path, remote: true, class: "btn btn-info btn-xs" %>
+<div id="scores"></div>
+
 
 

@@ -1,6 +1,6 @@
-<div class="well col-md-2">
-    <%= form_for @score, remote: true do |f| %>
-        <%= f.text_field :name, placeholder: "name" %>
-        <%= f.text_field :total, placeholder: @points %>
+<div id="scorecontainer" class="well col-md-2">
+    <% @scores.each do |score| %>
+        <%= score.name %>
+        <%= score.total %><br>
     <% end %>
 </div>

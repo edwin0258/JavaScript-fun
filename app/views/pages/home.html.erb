@@ -45,6 +45,9 @@
     
     //background color
     document.body.style.backgroundColor = "#007FFF";
+    $("body").stop(true,true).addClass("active", 500);
+
+
     title.style.backgroundImage = "url('http://il9.picdn.net/shutterstock/videos/4404917/thumb/1.jpg?i10c=img.resize(height:160)')"
     
     //placing elements on screen
@@ -124,28 +127,24 @@
            coin_box[i].style.left = randomLeft + "px";
         }
     }
+    
     function removeCoins(){
-        for(i = 0; i < 30; i++){
-            
-            $('.coinbox').remove();
-
-            coin_box = [];
-        }
+        $('.coinbox').remove();
+        coin_box = [];
     }
+    
     //keep red_box above coin but under walls
     document.body.appendChild(red_box);
     //setup walls on screen
     function removeWalls(){
-        for(i = 0; i < 30; i++){
-            
-            $('.wallbox').remove();
-
-            wall_top_array = [];
-            wall_left_array = [];
-        }
+        $('.wallbox').remove();
+        wall_top_array = [];
+        wall_left_array = [];
     }
+    //define how many walls are placed on screen
+    var wallCount = 50;
     function placeWalls(){
-        for(i = 0; i < 50; i++){
+        for(i = 0; i < wallCount; i++){
            //make a wall and give it wallbox class
            var wall_box = document.createElement("div");
            wall_box.setAttribute("class", "wallbox");
@@ -193,11 +192,16 @@
    
    //Intro
    $(document).ready(function(){
-   $("#title").stop(true).fadeIn({
-       duration: 5000,
-       queue: false
-   }).css('display', 'none').slideDown(4000);
-   
+        $("#title").stop(true).fadeIn({
+           duration: 5000,
+           queue: false
+        }).css('display', 'none').slideDown(4000);
+        $(document.body).css("background-color", "blue");
+        $(document.body).fadeIn({
+            duration: 2000,
+            queue: false
+        }).css("background-color", "black");
+        
    });
    
    //When pressing start button fade in game
@@ -225,12 +229,20 @@
        setTimeout(shiftLooseBox, 5000);
        setTimeout(moveLooseBox, 5000);
        if(level <= 1){
-       setInterval(moveLooseBox, 50);
-       setInterval(evaluateLoose, 10);
-       setInterval(wallHit, 1);
-       setInterval(coinHit, 5);
-       setInterval(shiftLooseBox, 2500);
-       setInterval(moveRedbox, 10);
+           setInterval(moveLooseBox, 50);
+           setInterval(evaluateLoose, 10);
+           setInterval(wallHit, 1);
+           setInterval(coinHit, 5);
+           setInterval(removeGlow, 1000);
+           setInterval(shiftLooseBox, 2500);
+           setInterval(moveRedbox, 10);
+       }
+       //every five levels increas loose_box speed
+       if(level == 5 || level == 10 || level == 15){
+           setInterval(moveLooseBox, 50);
+       }
+       if(level == 7){
+       
        }
    }
    
@@ -327,7 +339,11 @@ document.body.onkeydown = function(e){
    }
 };
 //game functions
-//alerting users level
+//remove redbox glow shortly after it is added from coin collision
+function removeGlow(){
+    $(".redbox").removeClass("redboxglow");
+}
+//alerting using jQuery ui
 function alert2(message, title, buttonText) {
 
     buttonText = (buttonText == undefined) ? "Ok" : buttonText;
@@ -431,7 +447,7 @@ var top_array;
 var hit = 0;
 function wallHit(){
     
-    for(i = 0; i < 50; i++){
+    for(i = 0; i < wallCount; i++){
     left_array = wall_left_array[i]
     top_array = wall_top_array[i]
     //console.log(top_array);
@@ -455,6 +471,7 @@ function coinHit(){
             points_container.appendChild(points_counter);
             document.body.removeChild(coin_box[i]);
             points += 1;
+            $(".redbox").addClass("redboxglow");
         }
     }
 }
@@ -478,6 +495,9 @@ function evaluateWin(){
     square_x = 490;
     square_y = 290;
     level += 1;
+    if(wallCount < 150){
+        wallCount += 25;
+    }
     alert2("You have " + points + " points", "level " + level, "Ok");
     showGame();
     }
@@ -487,7 +507,7 @@ function evaluateLoose(){
     console.log("You loose!");
     title.innerHTML = "You Loose!";
     title.style.backgroundColor = "maroon";
-    alert("Game Over")
+    alert2("You had " + points + " points", "Game Over", "Ok");
     $(".redbox").fadeOut(2000);
     $(".gamecontainer").fadeOut(2000);
     $(".winbox").fadeOut(2000);

@@ -11,6 +11,7 @@
     var title_name = document.createTextNode("The red box ");
     var points_container = document.createElement("div");
     var points_counter = document.createTextNode(points);
+    var post_score = document.createElement("Button");
     var level_container = document.createElement("div");
     var level_counter = document.createTextNode(level);
     var button_name = document.createTextNode("Start");
@@ -27,11 +28,14 @@
     title.appendChild(button);
     title.appendChild(points_container);
     points_container.appendChild(points_counter);
+    points_container.appendChild(post_score);
     
     
     //Appending classes and id's to created elements; this is to be able to style and manipulate them.
     button.setAttribute("class", "btn  btn-danger");
     button.setAttribute("id", "startbutton");
+    post_score.setAttribute("class", "postbutton btn btn-xs btn-primary");
+    post_score.innerHTML = "post score";
     points_container.setAttribute("class", "pointscontainer");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
     title.setAttribute("id", "title");
@@ -59,7 +63,8 @@
     //appended redbox last to make sure it is placed on top.(MOVED)
     //document.body.appendChild(red_box);
     //document.body.appendChild("points_counter");
-
+    
+    
     //start game button event listener
     button.addEventListener("click", showGame);
     
@@ -226,6 +231,7 @@
        var points_counter = document.createTextNode(points);
        points_container.innerHTML = "";
        points_container.appendChild(points_counter);
+       points_container.appendChild(post_score);
        setTimeout(shiftLooseBox, 5000);
        setTimeout(moveLooseBox, 5000);
        if(level <= 1){
@@ -469,6 +475,7 @@ function coinHit(){
             var points_counter = document.createTextNode(points);
             points_container.innerHTML = "";
             points_container.appendChild(points_counter);
+            points_container.appendChild(post_score);
             document.body.removeChild(coin_box[i]);
             points += 1;
             $(".redbox").addClass("redboxglow");
@@ -507,6 +514,7 @@ function evaluateLoose(){
     console.log("You loose!");
     title.innerHTML = "You Loose!";
     title.style.backgroundColor = "maroon";
+    title.appendChild(points_container);
     alert2("You had " + points + " points", "Game Over", "Ok");
     $(".redbox").fadeOut(2000);
     $(".gamecontainer").fadeOut(2000);
@@ -519,10 +527,13 @@ function evaluateLoose(){
     square_y = 200;
     game_over = 1;
     hit = 0;
+    points_container.appendChild(points_counter);
+    points_container.appendChild(post_score);
     }
 }
 
 
 
 <% end %>
+
 

@@ -53,6 +53,9 @@
  font-size: 15px;
  color:#6F4242;
 }
+.postbutton{
+    float:right;
+}
 .winbox{
     height:20px;
     width:10px;

@@ -36,6 +36,7 @@
     post_score.setAttribute("class", "postbutton btn btn-xs btn-primary");
     post_score.innerHTML = "post score";
     points_container.setAttribute("class", "pointscontainer");
+    points_container.setAttribute("id", "pointscontainer");
     title.setAttribute("class", "turn_red well col-md-6 col-md-offset-3", "id", "title");
     title.setAttribute("id", "title");
     red_box.setAttribute("class", "redbox");
@@ -216,8 +217,7 @@
        $(".gamecontainer").fadeIn(2000);
        $(".winbox").fadeIn(2000);
        $(".loosebox").fadeIn(2000);
-       $("#title").fadeIn(2000);
-       $("#title").slideDown(2000);
+       $("#scorebutton").fadeIn(2000);
        $(".safezone").fadeIn(2000);
        //remove old coins and walls and replace with new
        removeCoins();
@@ -546,8 +546,10 @@ function openForm(){
 
 <% end %>
 <!--High schore button and link to ajax partial showing scores-->
-<%= link_to "High Scores", scores_path, remote: true, class: "btn btn-info btn-xs" %>
+<div id="scorebutton">
+<%= link_to "High Scores", scores_path, remote: true, class: "btn btn-info btn-xs"%>
 <div id="scores"></div>
+</div>
 
 
 
